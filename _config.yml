@@ -1,8 +1,5 @@
 remote_theme: b2a3e8/jekyll-theme-console
 
-url: "https://typiespectre.github.io"
-baseurl: ""
-
 # Example Site settings
 
 google_analytics: UA-NNNNNNNN-N
@@ -10,6 +7,7 @@ google_analytics: UA-NNNNNNNN-N
 header_pages:
   - index.md
   - about.md
+  - contact.md
 
 footer: 'follow me on <a href="https://twitter.com/typiespectre">twitter</a>'
 

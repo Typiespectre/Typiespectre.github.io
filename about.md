@@ -1,8 +1,8 @@
 ---
 title: /about
-layout: post
+layout: page
 lang: 'ko'
-permalink: /
+permalink: /about
 ---
 
 # Welcome to Typiespectre's Blog!

@@ -1,5 +1,5 @@
 ---
-title: /prettypieces
+title: /about
 layout: post
 lang: 'ko'
 permalink: /

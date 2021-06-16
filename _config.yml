@@ -5,8 +5,6 @@ baseurl: ""
 
 # Example Site settings
 
-title: "Prettypieces"
-
 google_analytics: UA-NNNNNNNN-N
 
 header_pages:
@@ -14,8 +12,6 @@ header_pages:
   - about.md
 
 footer: 'follow me on <a href="https://twitter.com/typiespectre">twitter</a>'
-
-lang: 'ko'
 
 style: light # dark (default) or light
 listen_for_clients_preferred_style: true # true or false (default)

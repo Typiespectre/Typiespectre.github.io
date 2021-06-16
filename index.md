@@ -1,5 +1,5 @@
 ---
-title: /
+title: /prettypieces
 layout: home
 permalink: /
 ---

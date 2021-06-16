@@ -5,7 +5,7 @@ lang: 'ko'
 permalink: /about/
 ---
 
-이미지: ![test](https://typiespectre.github.io/images/test.png){: height='200px' width='200px'}
+![test](https://typiespectre.github.io/images/test.png){: height='200px' width='200px'}
 
 # Welcome to Typiespectre's Blog!
 <br />타이피의 블로그에 어서요세요.

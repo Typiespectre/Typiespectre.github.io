@@ -1,4 +1,4 @@
-title: 'typiespectre.github.io'
+title: "typiespectre.github.io"
 description: "Typiespectre's Blog"
 baseurl: ""
 url: "https://typiespectre.github.io"
@@ -9,6 +9,7 @@ google_analytics: UA-NNNNNNNN-N
 header_pages:
   - index.md
   - about.md
+  - os.md
 
 footer: 'follow me on <a href="https://twitter.com/typiespectre">twitter</a>'
 

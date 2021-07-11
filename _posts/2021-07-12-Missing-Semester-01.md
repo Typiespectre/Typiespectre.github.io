@@ -3,8 +3,8 @@ title: "MIT Missing Semester 연습문제 01 풀이"
 lang: "ko"
 layout: post
 date: 2021-07-12 00:37:01 +0900
-categories: [programming]
-tags: [programming]
+categories: [programming,]
+tags: [programming,]
 ---
 1. Create a new directory called **missing** under **/tmp**.
 <br />
@@ -56,6 +56,7 @@ ls -l
 <br />
 
 6. Run the command by explicitly starting the **sh** interpreter, and giving it the file **semester** as the first argument, i.e. **sh semester**. Why does this work, while **./semester** didn’t?
+
 <br />
     bash 명령어의 특성 상 읽기 권한만 있어도 스크립트가 실행될 수 있다고 한다. 왜냐하면 bash 명령어가 파일 내 존재하는 리눅스 명령어를 읽어와 실행하기 때문이다.(#!/bin/sh) 만약 파이썬이라면 동일하게 python을 붙이면 파일이 실행된다. 그러나 그룹과 타인에게 읽기 권한을 제외한다면, 권한이 거부된다(permission denied).
 <br />

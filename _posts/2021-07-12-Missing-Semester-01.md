@@ -76,7 +76,6 @@ ls -l
 
 8. Use **chmod** to make it possible to run the command **./semester** rather than having to type **sh semester**. How does your shell know that the file is supposed to be interpreted using **sh**? See this page on the [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) line for more information.    
 <br />
-
 ```zsh
 chmod u+x semester
 ```

@@ -7,6 +7,6 @@ categories: [programming]
 tags: [programming]
 ---
 1. Create a new directory called **missing** under **/tmp**.
-{% highlight console %}
+```zsh
 cd tmp && mkdir missing
-{% endhighlight %}
+```

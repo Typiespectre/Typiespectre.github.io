@@ -11,6 +11,7 @@ header_pages:
   - os.md
   - philosophy.md
   - about.md
+  - programming.md
 
 footer: 'follow me on <a href="https://twitter.com/typiespectre">twitter</a>'
 

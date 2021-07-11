@@ -7,6 +7,7 @@ categories: [programming,]
 tags: [programming,]
 ---
 1. Create a new directory called **missing** under **/tmp**.
+
 <br />
 ```zsh
 cd tmp && mkdir missing
@@ -14,6 +15,7 @@ cd tmp && mkdir missing
 <br />
 
 2. Look up the **touch** program. The **man** program is your friend.
+
 
     **touch** -- change file access and modification times    
 
@@ -26,6 +28,8 @@ cd tmp && mkdir missing
 <br />
 
 3. Use **touch** to create a new file called **semester** in **missing**.
+
+<br />
 ```zsh
 ~/tmp/missing
 touch semester
@@ -35,6 +39,7 @@ touch semester
 4. Write the following into that file, one line at a time:    
     #!/bin/sh    
     curl --head --silent https://missing.csail.mit.edu
+
 <br />
 ```zsh
 echo "#\!"/bin/sh > semester
@@ -43,6 +48,7 @@ echo "curl --head --silent https://missing.csail.mit.edu" >> semester
 <br />
 
 5. Try to execute the file, i.e. type the path to the script (**./semester**) into your shell and press enter. Understand why it doesn’t work by consulting the output of **ls** (hint: look at the permission bits of the file)
+
 <br />
 ```zsh
 ./semester
@@ -51,6 +57,7 @@ zsh: permission denied: ./semester
 ls -l
 -rw-r--r--  1 Typiespectre  staff  61  7 12 01:17 semester
 ```
+
 <br />
     즉, **semester** 파일에서 소유자(user)에게 주어진 권한은 읽기와 쓰기이고, 그룹과 타인에게 주어진 권한은 읽기이다. 그렇기에 해당 쉘에서 바로 **semester** 파일을 실행(execute)할 수 없다.
 <br />
@@ -62,6 +69,7 @@ ls -l
 <br />
 
 7. Look up the **chmod** program (e.g. use **man chmod**).
+
 <br />
     **chmod** -- change file modes or Access Control Lists
 
@@ -75,9 +83,11 @@ ls -l
 
 8. Use **chmod** to make it possible to run the command **./semester** rather than having to type **sh semester**. How does your shell know that the file is supposed to be interpreted using **sh**? See this page on the [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)) line for more information.    
 <br />
+
 ```zsh
 chmod u+x semester
 ```
+
 <br />
     소유자(user)에게 실행 권한을 주는 스크립트. 이후 **./semester**도 **sh semester** 과 동일하게 파일 실행이 가능하게 된다. 앞서 말했듯, **sh** 명령어가 파일 내 존재하는 쉘 명령어를 읽어와 실행한다고 하였는데, 이를 가능하게 하는 쉘 명령어를 **Shebang**(sharp:# + bang:!)이라고 한다. **Shebang**은 유닉스 계열 운영체제에서 스크립트가 실행될 때, 파이썬, Bash 쉘 등 어떠한 인터프리터에 의해서 동작이 되는지 알려주는 역할을 한다. 해당 파일의 **Shebang**은 **'#!/bin/sh'** 으로, **/bin/sh** 경로의 기본 쉘 또는 호환 쉘을 이용하여 파일을 실행할 것을 요청한다.
 <br />

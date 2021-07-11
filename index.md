@@ -5,5 +5,5 @@ lang: 'ko'
 permalink: /
 ---
 
-# Welcome to Typiespectre's Blog!
-<br />타이피의 블로그에 어서오세요.
+## Welcome to Typiespectre's Blog!
+타이피의 블로그에 어서오세요.

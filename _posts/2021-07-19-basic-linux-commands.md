@@ -11,4 +11,4 @@ tags: [programming]
 
 source: [https://www.reddit.com/r/linux/comments/b4khut/basic_linux_commands/](https://www.reddit.com/r/linux/comments/b4khut/basic_linux_commands/)
 
-DON'T TRY THIS AT HOME: `sudo rm -rf /*`{:.zsh}
+DON'T TRY THIS AT HOME: `sudo rm -rf /*`{:.shell}

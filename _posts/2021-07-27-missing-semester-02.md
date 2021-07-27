@@ -86,3 +86,18 @@ tags: [programming,]
     If you’re on macOS, note that the default BSD **find** is different from the one included in [GNU coreutils](https://en.wikipedia.org/wiki/List_of_GNU_Core_Utilities_commands). 
 
     You can use **-print0** on **find** and the **-0** flag on **xargs**. As a macOS user, you should be aware that command-line utilities shipped with macOS may differ from the GNU counterparts; you can install the GNU versions if you like by [using brew](https://formulae.brew.sh/formula/coreutils).
+
+    My answer:
+    ```zsh
+    find . -type f  -name '*.html' -print0 | xargs -0 tar zcvf html.tar.gz
+    ```
+    (-print0을 사용할 경우, 각 결과는 null 문자, 즉 \0으로 끝난다. 이러한 옵션을 지정하는 이유는, 먼저 macOS의 find 옵션이 기본 BSD find 명령어와 다르기 때문이고, 두 번쨰로 파일이나 디렉토리 이름에 개행이나 공백이 들어가 있는 경우에도 정확하게 처리할 수 있기 떄문이다.)
+<br />
+
+5. (Advanced) Write a command or script to recursively find the most recently modified file in a directory. More generally, can you list all files by recency?
+
+    My answer:
+    ```zsh
+    find . -type f | ls -t | head -1
+    ```
+

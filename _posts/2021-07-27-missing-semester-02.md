@@ -20,7 +20,8 @@ tags: [programming,]
     -rw-r--r--   1 user group  514 Jan 14 06:42 bar
     -rw-r--r--   1 user group 106M Jan 13 12:12 foo
     drwx------+ 47 user group 1.5K Jan 12 18:08 ..
-    ```
+    ```    
+
     My answer:
     ```zsh
     ls -ahltG
@@ -58,7 +59,8 @@ tags: [programming,]
     fi
 
     echo "Everything went according to plan"
-    ```
+    ```    
+
     My answer:
     ```zsh
     #!/bin/bash
@@ -77,9 +79,7 @@ tags: [programming,]
 
 4. As we covered in the lecture **find**’s **-exec** can be very powerful for performing operations over the files we are searching for. However, what if we want to do something with **all** the files, like creating a zip file? 
 
-    As you have seen so far commands will take input from both arguments and STDIN. When piping commands, we are connecting STDOUT to STDIN, but some commands like **tar** take inputs from arguments. 
-
-    To bridge this disconnect there’s the [**xargs**](https://www.man7.org/linux/man-pages/man1/xargs.1.html) command which will execute a command using STDIN as arguments. For example **ls (pipe) xargs rm** will delete the files in the current directory.
+    As you have seen so far commands will take input from both arguments and STDIN. When piping commands, we are connecting STDOUT to STDIN, but some commands like **tar** take inputs from arguments. To bridge this disconnect there’s the [**xargs**](https://www.man7.org/linux/man-pages/man1/xargs.1.html) command which will execute a command using STDIN as arguments.
 
     Your task is to write a command that recursively finds all HTML files in the folder and makes a zip with them. Note that your command should work even if the files have spaces (hint: check **-d** flag for **xargs**).
 

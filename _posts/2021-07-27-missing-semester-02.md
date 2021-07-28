@@ -49,7 +49,7 @@ tags: [programming,]
 
     ```zsh
     #!/usr/bin/env bash
-
+    # check_num.sh
     n=$(( RANDOM % 100 ))
 
     if [[ n -eq 42 ]]; then
@@ -59,8 +59,8 @@ tags: [programming,]
     fi
 
     echo "Everything went according to plan"
-    ```    
-
+    ```
+    
     My answer:
     ```zsh
     #!/bin/bash

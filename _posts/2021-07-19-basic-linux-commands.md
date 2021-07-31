@@ -7,7 +7,7 @@ categories: [programming]
 tags: [programming]
 ---
 
-![linux+command](https://typiespectre.github.io/images/linux+command.jpg){: width="100%" height="100%"}
+![linux-command](https://typiespectre.github.io/images/prog/linux-command.jpg){: width="100%" height="100%"}
 
 source: [https://www.reddit.com/r/linux/comments/b4khut/basic_linux_commands/](https://www.reddit.com/r/linux/comments/b4khut/basic_linux_commands/)
 

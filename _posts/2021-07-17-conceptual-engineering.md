@@ -7,7 +7,7 @@ categories: [philosophy]
 tags: [philosophy]
 ---
 
-![conceptualEngineering](https://typiespectre.github.io/images/conceptual+engineering.jpg){: width="90%" height="90%"}
+![conceptual-Engineering](https://typiespectre.github.io/images/phil/conceptual-engineering.jpg){: width="90%" height="90%"}
 
 언젠가 ‘철학은 개념공학이다!’라는 말을 들었던 기억이 납니다. 철학이 개념을 도구로 삼아 논의를 진행한다는 점에서 막연하게나마 이해를 할 수는 있었지만, 정확히 ‘개념공학’이 무엇인지는 알 수가 없었습니다. 그런데 개념 ‘공학’이라니… 기술자들이 개념을 이리저리 닦고 조이고 기름치는 장면이 머릿속에서 떠나질 않아서 그런지, 개념공학이라는 용어가 기억 한 켠에 남게 된 것 같습니다. 최근 개념공학을 전반적으로 소개하는 [한 편의 글](https://www.academia.edu/37202935/A_Guided_Tour_of_Conceptual_Engineering_and_Conceptual_Ethics)을 발견하게 되었는데, 간략하게나마 글의 내용을 정리를 해보며 개념공학에 대해 보다 자세히 이해해보고자 합니다.
 
@@ -110,7 +110,7 @@ Frege(1879/1967, 7)는 철학이 인간 사고를 지배하는 단어를 부수�
 
 만약 우리가 개념을 사용함으로써 삶을 행한다면, 그리고 개념이 특정한 목적에 의해 수정될 수 있는 것이라면, 개념조작이라는 특수한 사례도 생각해볼 수 있을 것 같습니다. 개념공학이 개념을 개선하는 작업을 한다면, 과연 무엇을 위한 ‘개선’이 되는 것일까요? 개념이 어떤 인지적 상태를 불러온다면, 개념에 의한 인지조작이 발생하는 것은 아닐까요? 만약 그렇다면, 현재 내가 가지고 있는 개념이 나의 일부를 조종하고 있는 것이 되는 것일까요? 만약 거대한 악의 무리가 적절한 개념을 이용하여 의도대로 우리를 움직이고 있는 것이라면? 역시 으스스해지네요. 마치 개념공학이 어두운 심연 속에서 기어올라오는 느낌도 드는 것 같습니다. 하지만 역시 아무도 받아들이지 않을 SF적인 과대망상이므로, 의미심장한 윙크로 긴 글을 마치겠습니다. 개념공학은 앞으로도 마음 한 켠에 남아있게 될 것 같습니다.
 
-![fakeNews](https://typiespectre.github.io/images/Fake+news.jpeg){: width="90%" height="90%"}
+![Fake-News](https://typiespectre.github.io/images/phil/Fake-news.jpeg){: width="90%" height="90%"}
 (만약 진실한 뉴스라면 영원히 문제가 없는 것일까?)
 
 <br />참고:

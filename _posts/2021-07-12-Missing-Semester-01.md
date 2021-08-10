@@ -7,15 +7,14 @@ categories: [programming,]
 tags: [programming,]
 ---
 1. `/tmp`에  `missing`이라는 새로운 경로를 만들어 보세요.
-
+<br />
 ```zsh
 cd tmp && mkdir missing
 ```
 <br />
 
 1. `touch`라는 프로그램을 관찰해보세요. `man` 프로그램이 도움이 될겁니다.
-
-
+<br />
     **touch** -- change file access and modification times    
 
     **touch** 명령어는 파일을 생성하거나 갱신하는 명령어이다. 존재하지 않는 파일명을 지정하면 지정된 파일명으로 새로운 파일이 생성되며, 이미 존재하는 파일명을 지정하면 해당 파일의 수정시간이 업데이트 된다.    
@@ -27,19 +26,20 @@ cd tmp && mkdir missing
 <br />
 
 1. `touch`를 이용해서 `semester`라는 파일을 `missing` 안에 만들어 보세요.
-
+<br />
 ```zsh
 ~/tmp/missing
 touch semester
 ```
 <br />
 
-1. 아래 주어진 것을 그 파일에 써보세요. 단, 한번에 한줄씩:    
+1. 아래 주어진 것을 그 파일에 써보세요. 단, 한번에 한줄씩:
+<br />
     ```
     #!/bin/sh
     curl --head --silent https://missing.csail.mit.edu
     ```
-
+<br />
 ```zsh
 echo "#\!"/bin/sh > semester
 echo "curl --head --silent https://missing.csail.mit.edu" >> semester
@@ -47,7 +47,7 @@ echo "curl --head --silent https://missing.csail.mit.edu" >> semester
 <br />
 
 1. 파일을 실행해보세요. 예를 들어, (`./semester`)라는 경로를 셸에 입력해보세요. 이것이 왜 작동하지 않는지 `ls`를 이용해 파악해보세요. (힌트: 파일의 비트 권한을 확인해보세요.)
-
+<br />
 ```zsh
 ./semester
 zsh: permission denied: ./semester
@@ -60,12 +60,12 @@ ls -l
 <br />
 
 1. `sh` 인터프리터로 시작해 명령을 실행하고, `semester` 파일에 첫 인자로 주세요. (즉 `sh semester` 이렇게!). `./semester`는 안되는데, 앞에 거는 왜 실행이 될까요?
-
+<br />
     bash 명령어의 특성 상 읽기 권한만 있어도 스크립트가 실행될 수 있다고 한다. 왜냐하면 bash 명령어가 파일 내 존재하는 리눅스 명령어를 읽어와 실행하기 때문이다.(#!/bin/sh) 만약 파이썬이라면 동일하게 python을 붙이면 파일이 실행된다. 그러나 그룹과 타인에게 읽기 권한을 제외한다면, 권한이 거부된다(permission denied).
 <br />
 
 1. `chmod` 프로그램을 살펴보세요. (`man chmod`를 사용해보세요).
-
+<br />
     **chmod** -- change file modes or Access Control Lists
 
     **chmod** 명령어는 파일의 모드(mode)를 변경하는 명령어이다. 모드란 세 가지 권한(읽기, 쓰기, 실행)과 각각의 권한을 지정할 대상(소유자, 그룹, 타인)을 포함한 파일의 속성을 말한다. 즉 **chmod** 명령을 사용하여 파일의 모드를 변경한다는 것은, 파일의 권한을 변경한다는 것과 동일한 의미를 가진다.
@@ -77,7 +77,7 @@ ls -l
 <br />
 
 1. `chmod`를 활용해 `sh semester` 대신에 `./semester`을 사용 가능하게 해보세요. `sh`을 이용해 이 파일을 해석해야 한다는 것을 셸이 어떻게 알까요? 이 페이지에서 [셔뱅(shebang)](https://en.wikipedia.org/wiki/Shebang_(Unix))에 대해서 더 알아보세요. 
-
+<br />
 ```zsh
 chmod u+x semester
 ```
@@ -86,7 +86,7 @@ chmod u+x semester
 <br />
 
 1. `|` 와 `>`를 사용해 `semester`별 "last modified" 날짜 출력을 홈 디렉토리에 `last-modified.txt`라는 파일에 작성하세요.
-
+<br />
 ```zsh
 ./semester | grep last-modified > last-modified.txt
 ...

@@ -11,4 +11,4 @@ Missing Semester 2021에서 에디터 부분 번역이 되어 있지 않아 번�
 
 [링크](https://github.com/Typiespectre/missing-semester-kr.github.io/blob/master/_2020/editors.md)
 
-(2021.08.17: pull request가 받아들여졌다! 사소한 뿌듯함을 느끼는 중... [Missing Semester 사이트](https://missing-semester-kr.github.io/2020/editors/))
+2021.08.17: pull request가 받아들여졌다! 사소한 뿌듯함을 느끼는 중... [Missing Semester](https://missing-semester-kr.github.io/2020/editors/)

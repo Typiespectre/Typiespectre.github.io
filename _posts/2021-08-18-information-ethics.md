@@ -48,6 +48,7 @@ tags: [philosophy]
 
 <br /> 글을 짧게 요약하느라 많은 부분을 생략하고 넘어갔습니다. 게다가 부족한 지식을 가지고 글을 잘 썼을지도 걱정이 되네요... 보다 자세한 논의는 Luciano Floridi의 [Information ethics: On the philosophical foundation of computer ethics](https://philpapers.org/rec/FLOIEO)을 확인해주세요. ['인포스피어와 정보철학'](https://horizon.kias.re.kr/18165/)에 대해 아주 잘 설명하는 한글 칼럼도 있습니다. 늘 글을 재밌고 짧게 쓰고 싶은데, 내공이 부족해서 재미없고 길게만 쓰게 되는 것 같습니다... 앞으로 보다 재밌고 유익한 글을 쓸 수 있도록 많이 읽고 연습을 해야겠습니다.
 
+- - -
 
 [^1]: "정보철학자 플로리디<sup>L.Floridi</sup>는 정보를 주고받을 수 있는 모든 정보 행위자들, 그들의 상호작용과 정보처리과정 등을 포함한 정보 환경 전체를 "인포스피어"로 정의한다", ['인포스피어와 정보철학'](https://horizon.kias.re.kr/18165/). 이 글에선 '인포스피어'를 '정보 환경'으로 번역을 했습니다.
 

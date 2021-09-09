@@ -12,13 +12,24 @@ tags: [programming,]
 <br />
     ```zsh
     첫 번쨰,
-    cat /usr/share/dict/words | grep ".*a.*a.*a.*" | grep -v ".*'s" | wc -l
+    cat /usr/share/dict/words 
+    | grep ".*a.*a.*a.*" 
+    | grep -v ".*'s" 
+    | wc -l
 
     4611
     ```
     ```zsh
     두 번째,
-    cat /usr/share/dict/words | grep ".*a.*a.*a.*" | grep -v ".*s" | sed -E 's/.*(..)/\1/' | sort | uniq -c | sort -nk1,1  | tail -n5 | awk '{print $2}'
+    cat /usr/share/dict/words 
+    | grep ".*a.*a.*a.*" 
+    | grep -v ".*s" 
+    | sed -E 's/.*(..)/\1/' 
+    | sort 
+    | uniq -c 
+    | sort -nk1,1  
+    | tail -n5 
+    | awk '{print $2}'
 
     on
     ae
@@ -28,7 +39,12 @@ tags: [programming,]
     ```
     ```zsh
     세 번째,
-    cat /usr/share/dict/words | tr {{A-Z}} {{a-z}} | grep ".*a.*a.*a.*" | grep -v ".*s" | uniq | wc -l
+    cat /usr/share/dict/words 
+    | tr {{A-Z}} {{a-z}} 
+    | grep ".*a.*a.*a.*" 
+    | grep -v ".*s" 
+    | uniq 
+    | wc -l
 
     4815
     ```
@@ -40,7 +56,14 @@ tags: [programming,]
         for j in {a..z} do
             echo "$i$j"
         done`
-    T=`/usr/share/dict/words | grep ".*a.*a.*a.*" | grep -v ".*s" | sed -E 's/.*(..)/\1/' | sort | uniq -c | sort -nk1,1 | awk '{print $2}'`
+    T=`/usr/share/dict/words 
+    | grep ".*a.*a.*a.*" 
+    | grep -v ".*s" 
+    | sed -E 's/.*(..)/\1/' 
+    | sort 
+    | uniq -c 
+    | sort -nk1,1 
+    | awk '{print $2}'`
 
     그리고 두 어레이를 비교한다...
     echo ${S[@]} ${T[@]} | tr ' ' '\n' | sort | uniq -u

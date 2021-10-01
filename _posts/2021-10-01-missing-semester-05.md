@@ -25,6 +25,24 @@ tags: [programming,]
     > sleep 60 &
     > wait %1; ls
     
-    # 그런데 그냥 sleep 60; ls를 해도 똑같은 결과가 나오는 것 같다...
+    # 그런데 그냥 "sleep 60; ls"를 해도 똑같은 결과가 나오는 것 같다...
     ```
-하지만 만일 각기 다른 bash 창에서 작업을 실행하는 중이라면, 이 시도는 실패할 것입니다. wait은 자식 프로세스에만 적용되기 때문입니다. 지금껏 우리가 다루지 않은 기능 중 하나는 명령어 kill이 성공했을때 exit status가 0(zero)이 되며, 그렇지 않을때는 0이 아니라는 것(nonzero)입니다. 명령어 kill -0은 시그널을 보내지 않습니다만 프로세스가 존재하지 않을때 0이 아닌 exit status를 반환할 것입니다. pidwait이라는 이름의, pid를 가져오고 해당 프로세스가 끝날 때까지 기다리는 bash 명령어를 작성해 보세요. 불필요한 CPU 낭비 방지를 위해 sleep 명령어를 사용해야 합니다.
+하지만 만일 각기 다른 bash 창에서 작업을 실행하는 중이라면, 이 시도는 실패할 것입니다. `wait`은 자식 프로세스에만 적용되기 때문입니다. 지금껏 우리가 다루지 않은 기능 중 하나는 명령어 `kill`이 성공했을때 exit status가 0(zero)이 되며, 그렇지 않을때는 0이 아니라는 것(nonzero)입니다. 명령어 `kill -0`은 시그널을 보내지 않습니다만 프로세스가 존재하지 않을때 0이 아닌 exit status를 반환할 것입니다. `pidwait`이라는 이름의, pid를 가져오고 해당 프로세스가 끝날 때까지 기다리는 bash 명령어를 작성해 보세요. 불필요한 CPU 낭비 방지를 위해 `sleep` 명령어를 사용해야 합니다.
+    ```sh
+    > pidwait()
+        {
+            while kill -0 $1 2>/dev/null
+                do
+                    sleep 1
+                done
+            ls
+        }
+    
+    > sleep 60 &
+    > pidwait $(pgrep sleep)
+
+    # 답안 참조: https://ivan-kim.github.io/MIT-missing-semester/Lecture5/
+    ```
+<br />
+
+1. 이 `tmux` [튜토리얼](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)을 따라해 보고 [이 단계](https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/)에 따라 기본적인 커스터마이제이션 방법을 배워보세요. (완료)

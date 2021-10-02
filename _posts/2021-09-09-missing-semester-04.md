@@ -8,16 +8,17 @@ tags: [programming,]
 ---
 
 1. [짧은 반응형 정규식 튜토리얼](https://regexone.com/)을 완수하세요.
-1. (`/usr/share/dict/words` 안에서) 적어도 세 개의 `a`가 포함되고, `s`로 끝나지 않는 단어의 개수를 찾아보세요. 그러한 단어들의 마지막 두 글자로 무엇이 가장 흔한가요? `sed`의 `y` 명령어, 또는 `tr` 프로그램은 대소문자 구분 문제를 해결하는데 도움이 될 것입니다. 그러한 두 글자 조합은 얼마나 존재하나요? 그리고 도전문제로: 두 글자 조합 중 등장하지 않는 조합은 무엇이 있나요?
+1. (`/usr/share/dict/words` 안에서) 적어도 세 개의 `a`가 포함되고, `'s`로 끝나지 않는 단어의 개수를 찾아보세요. 그러한 단어들의 마지막 두 글자로 무엇이 가장 흔한가요? `sed`의 `y` 명령어, 또는 `tr` 프로그램은 대소문자 구분 문제를 해결하는데 도움이 될 것입니다. 그러한 두 글자 조합은 얼마나 존재하나요? 그리고 도전문제로: 두 글자 조합 중 등장하지 않는 조합은 무엇이 있나요?
 <br />
     ```zsh
     첫 번째,
-    cat /usr/share/dict/words 
+    cat /usr/share/dict/words
+    | tr {{A-Z}} {{a-z}} 
     | grep ".*a.*a.*a.*" 
-    | grep -v ".*s" 
+    | grep -v "\'s" 
     | wc -l
 
-    >> 4611
+    >> 6723
 
     ```
     ```zsh
@@ -25,17 +26,15 @@ tags: [programming,]
     cat /usr/share/dict/words
     | tr {{A-Z}} {{a-z}}
     | grep ".*a.*a.*a.*" 
-    | grep -v ".*s" 
+    | grep -v "\'s" 
     | sed -E 's/.*(..)/\1/' 
     | sort 
     | uniq -c 
-    | sort -nk1,1  
-    | tail -n5 
+    | sort -n
+    | tail -n3 
     | awk '{print $2}'
 
     >> on
-       ae
-       an
        ia
        al
 
@@ -45,12 +44,12 @@ tags: [programming,]
     cat /usr/share/dict/words 
     | tr {{A-Z}} {{a-z}} 
     | grep ".*a.*a.*a.*" 
-    | grep -v ".*s"
+    | grep -v "\'s"
     | sed -E 's/.*(..)/\1/' 
     | uniq -c
     | wc -l
 
-    >> 4256
+    >> 6214
 
     ```
     ```zsh
@@ -63,9 +62,9 @@ tags: [programming,]
     T=`cat /usr/share/dict/words
     | tr {{A-Z}} {{a-z}}
     | grep ".*a.*a.*a.*" 
-    | grep -v ".*s" 
-    | sed -E 's/.*(..)/\1/' 
-    | sort 
+    | grep -v "\'s" 
+    | sed -E 's/.*(..)/\1/'
+    | sort
     | uniq -c
     | awk '{print $2}'`
 
@@ -73,8 +72,19 @@ tags: [programming,]
     echo ${S[@]} ${T[@]} | tr ' ' '\n' | sort | uniq -u
 
     그런데 이렇게 하는게 맞는지 잘 모르겠음...
-    S의 길이: 676 (26*26), T의 길이: 118
-    >> 결과값: 559
+    S의 길이: 676 (26*26), T의 길이: 156
+    >> 결과값: 521
+
+    * 파일을 만들어서 진행하는 방법도 있었다
+    * 참고: https://ivan-kim.github.io/MIT-missing-semester/Lecture4/
+    
+    cat /usr/share/dict/words | tr "[:upper:]" "[:lower:]" | grep -E "^([^a]*a){3}.*$" | grep -v "\'s$" | sed -E "s/.*([a-z]{2})$/\1/" | sort | uniq > last_letters
+
+    source letters.sh > all_letters
+
+    diff --changed-group-format="%<" --unchanged-group-format="" all_letters last_letters
+
+    위에서 진행한 것과 결과값은 동일!!
     ```
 <br />
 

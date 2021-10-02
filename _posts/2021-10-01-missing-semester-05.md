@@ -46,3 +46,27 @@ tags: [programming,]
 <br />
 
 1. 이 `tmux` [튜토리얼](https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/)을 따라해 보고 [이 단계](https://www.hamvocke.com/blog/a-guide-to-customizing-your-tmux-conf/)에 따라 기본적인 커스터마이제이션 방법을 배워보세요. (완료)
+
+1. 오타 낼 경우를 대비해서 `cd`로 연결되는 별칭 `dc`를 생성합니다.
+    ```sh
+    > alias dc="cd"
+    ```
+<br />
+
+1. `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10`를 실행해서 가장 많이 사용하는 명령어 10개를 확인합니다. 그리고 이들에게 짧은 별칭을 부여하는 것을 고려해 보세요. 주의: 이 방법은 Bash에서 유효합니다; 만일 ZSH를 쓰고 있다면, 그냥 `history` 말고 `history 1`를 사용하세요.
+    ```sh
+    음... 자주 사용하는 명령어 중 하나로, 알고리즘 확인 용으로
+    python main.py < input.txt > output.txt가 있는데,
+    alias chk="python main.py < input.txt > output.txt"
+    로 바꾸면 조금 나을까...? 그런데 그냥 화살표로 기존 히스토리에서 불러오는게 더 편한들...
+    ```
+<br />
+
+1. 도트 파일들을 위한 폴더를 생성하고, 버전 컨트롤을 구성합니다.
+    ```sh
+    > mkdir ~/dotfiles
+    > git init ~/dotfiles
+    ```
+<br />
+
+1. 최소한 프로그램 하나에 구성을 추가합니다, 예. 여러분의 셸에 약간의 커스터마이제이션 하기(시작하는 차원에서, `$PS1`을 설정해 셸 프롬프트를 커스터마이제이션 하는것과 같이 간단한 것도 좋습니다).

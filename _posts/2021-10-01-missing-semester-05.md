@@ -62,8 +62,8 @@ tags: [programming,]
 1. `history | awk '{$1="";print substr($0,2)}' | sort | uniq -c | sort -n | tail -n 10`를 실행해서 가장 많이 사용하는 명령어 10개를 확인합니다. 그리고 이들에게 짧은 별칭을 부여하는 것을 고려해 보세요. 주의: 이 방법은 Bash에서 유효합니다; 만일 ZSH를 쓰고 있다면, 그냥 `history` 말고 `history 1`를 사용하세요.
     ```sh
     # 음... 자주 사용하는 명령어 중 하나로, 알고리즘 확인 용으로 python main.py < input.txt > output.txt가 있는데,
+    # 별칭으로 바꾸면 조금 나을까...? 그런데 그냥 화살표로 기존 히스토리에서 불러오는게 더 편한듯...
     > alias chk="python main.py < input.txt > output.txt
-    # 로 바꾸면 조금 나을까...? 그런데 그냥 화살표로 기존 히스토리에서 불러오는게 더 편한듯...
     ```
 <br />
 
@@ -101,3 +101,49 @@ tags: [programming,]
 # 원격 머신
 
 1. `~/.ssh/`로 이동한 다음 그곳에 SSH 키페어가 있는지 확인합니다. 만일 키페어가 없다면, `ssh-keygen -o -a 100 -t ed25519`를 통해 생성하세요. 비밀번호와 `ssh-agent`를 사용하는 것이 권장됩니다. 더 많은 정보는 [여기](https://www.ssh.com/academy/ssh/agent)서 확인하세요.
+    ```sh
+    > ssh-keygen
+    ...
+    > eval "$(ssh-agent -s)"
+    Agent pid 28488
+    ```
+<br />
+
+1. `.ssh/config`를 수정해 다음과 같은 사항을 추가해 줍니다.
+    ```sh
+    # config
+    Host dockerUbuntu
+        User root
+        HostName localhost
+        IdentityFile ~/.ssh/id_ed25519
+        Port 1200
+        LocalForward 9999 localhost:8888
+        AddKeysToAgent yes
+        UseKeychain yes
+        ForwardAgent yes
+    
+    > ssh-add -K ~/.ssh/id_ed25519
+    ```
+<br />
+
+1. `ssh-copy-id vm`를 통해 ssh 키를 서버에 복사하세요.
+    ```sh
+    # 생각보다 docker로 띄운 ubuntu와 mac 간의 연결을 구성하느라 시간을 먹었다.
+    # 아무튼 완료해서...
+    > ssh-copy-id -i ~/.ssh/id_ed25519.pub root@localhost -p 1200
+    > ssh -p 1200 root@localhost
+    # or
+    > ssh dockerUbuntu
+    ```
+<br />
+
+1. `python -m http.server 8888`를 실행해 여러분의 가상 머신에서 웹서버를 시작합니다. 여러분의 머신에서 `http://localhost:9999`를 통해 해당 서버에 접근할 수 있습니다.
+    ```sh
+    # ubuntu: python 2.7
+    > ssh -L 9999:localhost:8888 dockerUbuntu
+    > python -m SimpleHTTPServer 8888
+    ```
+포트포워딩에 대해 잘 설명되어 있는 [블로그 글](https://jusths.tistory.com/102)
+<br />
+
+1. `sudo vim /etc/ssh/sshd_config`를 사용해 SSH 서버의 구성을 수정하세요. 그리고 `PasswordAuthentication`의 값을 변경해 비밀번호 인증을 해제합니다. `PermitRootLogin`의 값을 변경해 루트 로그인 기능을 해제합니다. `sudo service sshd restart` 명령어로 `ssh`를 재시작 합니다. `ssh` 접속을 다시 시도해 보세요.

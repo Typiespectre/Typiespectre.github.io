@@ -147,3 +147,28 @@ tags: [programming,]
 <br />
 
 1. `sudo vim /etc/ssh/sshd_config`를 사용해 SSH 서버의 구성을 수정하세요. 그리고 `PasswordAuthentication`의 값을 변경해 비밀번호 인증을 해제합니다. `PermitRootLogin`의 값을 변경해 루트 로그인 기능을 해제합니다. `sudo service sshd restart` 명령어로 `ssh`를 재시작 합니다. `ssh` 접속을 다시 시도해 보세요.
+    ```sh
+    # /etc/ssh/sshd_config
+    PermitRootLogin no
+    ...
+    PasswordAuthentication no
+    ```
+다음과 같이 설정한 뒤, ssh로 재접속을 하면, `Permission denied (public key)` 메세지가 뜨며 접속이 거절된다. 왜냐하면 해당 서버가 오직 `key-based` 로그인만 허용하게 되기 때문에, 루트 유저 또한 패스워드만으로 자유롭게 접근할 수 없게 된다.
+<br />
+
+1. (도전) 가상 머신에 [mosh](https://mosh.org/)를 설치해 연결을 구성해 보세요. 그리고 서버/가상머신의 네트워크 어댑터를 연결 해제 합니다. mosh가 이 문제를 제대로 해결할 수 있나요?
+    ```sh
+    > sudo apt-get install mosh
+    ```
+신기하다. mosh를 설치하고 다시 ssh로 접속한 뒤, 와이파이 커넥션을 해제해도, ssh로 접속한 가상머신과 연결이 끊기지 않고 유지된다.
+<br />
+
+1. (도전) `ssh`에서 `-N`과 `-f` 플래그가 어떤 역할을 하는지 살펴보세요. 그리고 백그라운드 포트 포워딩을 하기 위해서는 어떤 명령어를 써야 하는지 찾아보세요.
+    ```sh
+    # https://explainshell.com/explain?cmd=ssh+-L+-N+-f+-l
+    -N  Do not excute a remote command.
+    -f  Requests ssh to go to background just before command execution.
+
+    > ssh -fN -L 9999:localhost:8888 dockerUbuntu
+    ```
+백그라운드 포트포워딩을 중지하는 [방법](https://unix.stackexchange.com/questions/83806/how-to-kill-ssh-session-that-was-started-with-the-f-option-run-in-background)

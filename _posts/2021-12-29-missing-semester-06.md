@@ -11,19 +11,19 @@ tags: [programming,]
 
 1. [수업을 위한 웹사이트](https://github.com/missing-semester/missing-semester)를 클론해보세요.
 - 버전 history를 그래프로 시각화하여 살펴보세요.
-```sh
-git log --all --graph --decorate --oneline
-```
+	```sh
+		git log --all --graph --decorate --oneline
+	```
 - 마지막으로 `README.md`를 수정한 사람은 누구입니까? (힌트: `git log`인수를 사용해보세요)
-```sh
-git log --all --graph --decorate README.md
+	```sh
+		git log --all --graph --decorate README.md
 
-output:
-* commit 8010724516adc968765e8efd14991f262f0d0423
-| Author: Anish Athalye <me@anishathalye.com>
-| Date:   Tue Jul 27 08:29:08 2021 -0400
-|
-|     Separate build and links status
-|
-```
+		output:
+		* commit 8010724516adc968765e8efd14991f262f0d0423
+		| Author: Anish Athalye <me@anishathalye.com>
+		| Date:   Tue Jul 27 08:29:08 2021 -0400
+		|
+		|     Separate build and links status
+		|
+	```
 

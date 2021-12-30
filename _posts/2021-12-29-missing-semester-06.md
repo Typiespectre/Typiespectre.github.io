@@ -12,11 +12,12 @@ tags: [programming,]
 1. [수업을 위한 웹사이트](https://github.com/missing-semester/missing-semester)를 클론해보세요.
 - 버전 history를 그래프로 시각화하여 살펴보세요.
 	```sh
-		git log --all --graph --decorate --oneline
+		> git log --all --graph --decorate --oneline
 	```
+<br />
 - 마지막으로 `README.md`를 수정한 사람은 누구입니까? (힌트: `git log`인수를 사용해보세요)
 	```sh
-		git log --all --graph --decorate README.md
+		> git log --all --graph --decorate README.md
 
 		output:
 		* commit 8010724516adc968765e8efd14991f262f0d0423
@@ -26,4 +27,33 @@ tags: [programming,]
 		|     Separate build and links status
 		|
 	```
+<br />
+- `_config.yml`의 `collections:` 라인의 마지막 수정과 관련된 커밋 메세지는 무엇입니까? (힌트: `git blame`과 
+	```sh
+		> git blame _config.yml
+		
+		output:
+		fa309f93 (Anish Athalye 2020-05-16 11:13:27 -0400 29)
+		
+		> git show fa309f93
+
+		output:
+		commit fa309f93162654a5a4993df8b151a1efc26ceb5c
+		Author: Anish Athalye <me@anishathalye.com>
+		Date:   Sat May 16 11:13:27 2020 -0400
+
+			Fix Travis CI build
+
+		diff --git a/_config.yml b/_config.yml
+		index fce0b9f..526d6d1 100644
+		--- a/_config.yml
+		+++ b/_config.yml
+		@@ -26,3 +26,4 @@ exclude:
+		   - README.md
+		   - Gemfile
+		   - Gemfile.lock
+		+  - vendor	
+```
+<br />
+1. Git을 배울 때 흔히 저지르는 실수 중 하나는 대용량 파일을 커밋하거나 Git에서 관리해서는 안되는 민감한 정보를 추가하는 것입니다. 저장소에 파일을 추가하는 커밋을 몇번 해보고 history에서 해당 파일을 삭제하세요. (당신은 아마 [이걸](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository) 보고 싶을 거에요)
 

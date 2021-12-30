@@ -71,7 +71,7 @@ tags: [programming,]
 <br />
 1. GitHub에서 일부 저장소를 clone하고 기존 파일 중 하나를 수정합니다. `git stash`할 때 어떤 일이 생기나요? `git log --all --oneline`을 실행할 때 무엇을 볼 수 있나요? `git stash pop`을 실행하여 `git stash`한 작업을 취소하세요. 어떤 시나리오가 유용할까요?
 	```sh
-		> echo "<p>This is 404 page</p> >> 404.html
+		> echo "<p>This is 404 page</p>" >> 404.html
 		
 		> git stash
 		
@@ -114,5 +114,6 @@ tags: [programming,]
 		# copy to ~/.gitignore_global
 		> cat temp.txt >> ~/.gitignore_global
 	```
+<br />
 1. [수업을 위한 웹사이트의 저장소](https://github.com/missing-semester/missing-semester)를 clone하고, 오타 또는 기타 개선 사항을 찾아 Github에 pull request를 해보세요. (생략)
 

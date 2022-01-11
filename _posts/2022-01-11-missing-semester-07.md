@@ -25,6 +25,7 @@ tags: [programming,]
       grep -qi hq.*mp3 $f \
         && echo -e 'Playlist $f contains a HQ file in mp3 format'
     done
+    ## ---[EOF]---
     ```
 
     ```sh
@@ -49,6 +50,7 @@ tags: [programming,]
         && echo -e 'Playlist $f contains a HQ file in mp3 format'
                 ^-- SC3037 (warning): In POSIX sh, echo flags are undefined.
                    ^-- SC2016 (info): Expressions don't expand in single quotes, use double quotes for that.
+    ## ---[EOF]---
     ```
 
     ```sh
@@ -61,3 +63,4 @@ tags: [programming,]
     done
     ```
 <br />
+1.(심화) [reversible debugging](https://undo.io/resources/reverse-debugging-whitepaper/)에 대해 읽어보고 [rr](https://rr-project.org/) 혹은 [RevPDB](https://morepypy.blogspot.com/2016/07/reverse-debugging-for-python.html)를 사용하여 간단한 작업을 해보세요.

@@ -209,29 +209,31 @@ tags: [programming,]
 <br />
 
 1. 다음은 각 숫자에 대한 함수를 사용하여 피보나치 숫자를 계산하기 위한 파이썬 코드입니다.(다음 코드는 논란의 여지가 있습니다.)
-```python
-#!/usr/bin/env python
-def fib0(): return 0
 
-def fib1(): return 1
+    ```python
+    #!/usr/bin/env python
+    def fib0(): return 0
 
-s = """def fib{}(): return fib{}() + fib{}()"""
+    def fib1(): return 1
 
-if __name__ == '__main__':
+    s = """def fib{}(): return fib{}() + fib{}()"""
 
-    for n in range(2, 10):
-        exec(s.format(n, n-1, n-2))
-    # from functools import lru_cache
-    # for n in range(10):
-    #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
-    print(eval("fib9()"))
-```
-코드를 파일에 넣고 실행 가능하게 만드세요. [pycallgraph](https://pycallgraph.slowchop.com/en/master/)를 설치하고 `pycallgraph graphviz -- ./fib.py`라는 명령어와 함께 위 코드를 실행한 뒤 `pycallgraph.png`를 체크해보세요. `fib0`은 몇 번이나 호출되었을까요? 메모이제이션(memoization)하면 위 함수를 개선할 수 있습니다. 주석처리된 부분의 주석을 제거하고 이미지를 다시 생성해보세요. 이번에는 `fibN` 함수가 몇 번이나 호출되었나요?
+    if __name__ == '__main__':
 
-![pycallgraph.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="100%" height="100%"}
+        for n in range(2, 10):
+            exec(s.format(n, n-1, n-2))
+        # from functools import lru_cache
+        # for n in range(10):
+        #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
+        print(eval("fib9()"))
+    ```
+
+- 코드를 파일에 넣고 실행 가능하게 만드세요. [pycallgraph](https://pycallgraph.slowchop.com/en/master/)를 설치하고 `pycallgraph graphviz -- ./fib.py`라는 명령어와 함께 위 코드를 실행한 뒤 `pycallgraph.png`를 체크해보세요. `fib0`은 몇 번이나 호출되었을까요? 메모이제이션(memoization)하면 위 함수를 개선할 수 있습니다. 주석처리된 부분의 주석을 제거하고 이미지를 다시 생성해보세요. 이번에는 `fibN` 함수가 몇 번이나 호출되었나요?
+
+![pycallgraph.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
 - `fib0`은 총 21번 호출되었다.
 
-![pycallgraph2.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="100%" height="100%"}
+![pycallgraph2.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
 - 모든 함수는 총 한 번 실행되고, 중복되는 함수는 캐시처리 된다!
 
 1. 수신하려는 포트가 이미 다른 프로세스에 사용되고 있는 것은 일반적인 문제입니다. 이를 위해 프로세스의 pid를 알아내는 방법을 배워봅시다. `4444`포트에서 수신 대기하는 최소한의 웹 서버를 만들기 위해서 `python -m http.server 4444`명령을 실행합니다. 다른 터미널에서 `lsof | grep LISTEN`을 사용하여 모든 수신 프로세스와 포트를 출력합니다. 해당 프로세스의 pid를 찾고 `kill <PID>` 명령을 실행하여 프로세스를 종료합니다.

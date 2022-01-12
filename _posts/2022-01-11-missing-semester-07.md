@@ -65,11 +65,12 @@ tags: [programming,]
     ```
 <br />
 
-1.(심화) [reversible debugging](https://undo.io/resources/reverse-debugging-whitepaper/)에 대해 읽어보고 [rr](https://rr-project.org/) 혹은 [RevPDB](https://morepypy.blogspot.com/2016/07/reverse-debugging-for-python.html)를 사용하여 간단한 작업을 해보세요.
-- TDD(Time Travel Debugger)는 기존의 디버거와 다르게 코드의 진행과 반대로도 디버깅을 할 수 있는 기능을 가지고 있다(마음대로 함수 밖으로 빠져나오거나 들어갈 수도 있다!) 하지만 파이썬을 사용하는 입장에서, RevPDB는 2017년 이후 업데이트가 되지 않고 있고, 여전히 알파 단계이며 파이썬 2.7만을 지원한다고 한다. 이외에도 파이썬에는 마땅한 TDD가 없는 것 같다. 기존 pdb에서 jump를 이용하면 코드를 마음대로 이동할 수 있는 것 같기도 하다.
+1. (심화) [reversible debugging](https://undo.io/resources/reverse-debugging-whitepaper/)에 대해 읽어보고 [rr](https://rr-project.org/) 혹은 [RevPDB](https://morepypy.blogspot.com/2016/07/reverse-debugging-for-python.html)를 사용하여 간단한 작업을 해보세요.
+-TDD(Time Travel Debugger)는 기존의 디버거와 다르게 코드의 진행과 반대로도 디버깅을 할 수 있는 기능을 가지고 있다(마음대로 함수 밖으로 빠져나오거나 들어갈 수도 있다!) 하지만 파이썬을 사용하는 입장에서, RevPDB는 2017년 이후 업데이트가 되지 않고 있고, 여전히 알파 단계이며 파이썬 2.7만을 지원한다고 한다. 이외에도 파이썬에는 마땅한 TDD가 없는 것 같다. 기존 pdb에서 jump를 이용하면 코드를 마음대로 이동할 수 있는 것 같기도 하다.
 
 ### 프로파일링
-1.[이곳](https://missing-semester-kr.github.io/static/files/sorts.py)에 다양한 정렬 알고리즘이 구현되어 있습니다. [cProfile](https://docs.python.org/3/library/profile.html)과 [line_profiler](https://github.com/rkern/line_profiler)를 사용하여 삽입 정렬과 퀵 정렬의 수행 시간을 비교해보세요. 각 알고리즘에서 병목 현상이 일어나는 곳은 어디인가요? `memory_profiler`를 사용하여 메모리 사용량을 비교해보고 왜 삽입 정렬이 나은지를 알아보세요. 내장된 버전의 퀵 소트를 체크해보세요. 도전: `perf`를 사용하여 각 알고리즘의 주기 횟수 및 캐시 히트/미스를 확인해보세요.
+
+1. [이곳](https://missing-semester-kr.github.io/static/files/sorts.py)에 다양한 정렬 알고리즘이 구현되어 있습니다. [cProfile](https://docs.python.org/3/library/profile.html)과 [line_profiler](https://github.com/rkern/line_profiler)를 사용하여 삽입 정렬과 퀵 정렬의 수행 시간을 비교해보세요. 각 알고리즘에서 병목 현상이 일어나는 곳은 어디인가요? `memory_profiler`를 사용하여 메모리 사용량을 비교해보고 왜 삽입 정렬이 나은지를 알아보세요. 내장된 버전의 퀵 소트를 체크해보세요. 도전: `perf`를 사용하여 각 알고리즘의 주기 횟수 및 캐시 히트/미스를 확인해보세요.
     ```sh
     > python -m cProfile -s cumulative sorts.py
 
@@ -84,6 +85,7 @@ tags: [programming,]
          1000    0.023    0.000    0.023    0.000 sorts.py:11(insertionsort)
     ---[EOF]---
     ```
+
     ```sh
     ## insertionsort 위에 @profile을 붙여야 한다.
     ## insertionsort profiling
@@ -135,6 +137,7 @@ tags: [programming,]
     ## insertionsort보다 quicksort가 더 빠르다.
     ---[EOF]---
     ```
+
     ```sh
     ## 위와 동일하게 insertionsort 함수 위에 @profile 설정
     ## insertionsort memory profiling
@@ -202,6 +205,7 @@ tags: [programming,]
     ## 여전히 quicksort보다 메모리를 많이 차지하는 것처럼 보인다. 내가 값을 잘못 해석하고 있는건가...?
     ---[EOF]---
     ```
+<br />
     - `perf`는 Linux 명령어이여서 테스트할 수 없었다.
 <br />
 

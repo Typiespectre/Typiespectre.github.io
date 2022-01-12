@@ -204,51 +204,54 @@ tags: [programming,]
 <br />
 
 - `perf`는 Linux 명령어이여서 테스트할 수 없었다.
+<br />
 
 1. 다음은 각 숫자에 대한 함수를 사용하여 피보나치 숫자를 계산하기 위한 파이썬 코드입니다.(다음 코드는 논란의 여지가 있습니다.) 코드를 파일에 넣고 실행 가능하게 만드세요. [pycallgraph](https://pycallgraph.slowchop.com/en/master/)를 설치하고 `pycallgraph graphviz -- ./fib.py`라는 명령어와 함께 위 코드를 실행한 뒤 `pycallgraph.png`를 체크해보세요. `fib0`은 몇 번이나 호출되었을까요? 메모이제이션(memoization)하면 위 함수를 개선할 수 있습니다. 주석처리된 부분의 주석을 제거하고 이미지를 다시 생성해보세요. 이번에는 `fibN` 함수가 몇 번이나 호출되었나요?
-```sh
-#!/usr/bin/env python
-def fib0(): return 0
 
-def fib1(): return 1
+    ```sh
+    #!/usr/bin/env python
+    def fib0(): return 0
 
-s = """def fib{}(): return fib{}() + fib{}()"""
+    def fib1(): return 1
 
-if __name__ == '__main__':
+    s = """def fib{}(): return fib{}() + fib{}()"""
 
-    for n in range(2, 10):
-        exec(s.format(n, n-1, n-2))
-    # from functools import lru_cache
-    # for n in range(10):
-    #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
-    print(eval("fib9()"))
-```
+    if __name__ == '__main__':
+
+        for n in range(2, 10):
+            exec(s.format(n, n-1, n-2))
+        # from functools import lru_cache
+        # for n in range(10):
+        #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
+        print(eval("fib9()"))
+    ```
 <br />
 
 ![pycallgraph.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
 - `fib0`은 총 21번 호출되었다.
 
 ![pycallgraph2.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
-- 모든 함수는 총 한 번 실행되고, 중복되는 함수는 캐시처리 된다!
 <br />
+- 모든 함수는 총 한 번 실행되고, 중복되는 함수는 캐시처리 된다!
 
+<br />
 1. 수신하려는 포트가 이미 다른 프로세스에 사용되고 있는 것은 일반적인 문제입니다. 이를 위해 프로세스의 pid를 알아내는 방법을 배워봅시다. `4444`포트에서 수신 대기하는 최소한의 웹 서버를 만들기 위해서 `python -m http.server 4444`명령을 실행합니다. 다른 터미널에서 `lsof | grep LISTEN`을 사용하여 모든 수신 프로세스와 포트를 출력합니다. 해당 프로세스의 pid를 찾고 `kill <PID>` 명령을 실행하여 프로세스를 종료합니다.
-```sh
-## `lsof`는 list open files(열려있는 파일 나열)을 뜻하는 명령으로, 수많은 유닉스 계열 운영 체제에서 열려있는 모든 파일과, 그 파일들을 열고 있는 프로세스들의 목록을 출력한다. (wikipedia)
+    ```sh
+    ## `lsof`는 list open files(열려있는 파일 나열)을 뜻하는 명령으로, 수많은 유닉스 계열 운영 체제에서 열려있는 모든 파일과, 그 파일들을 열고 있는 프로세스들의 목록을 출력한다. (wikipedia)
 
-> lsof -i -n -P | grep LISTEN
-## -i: IP소켓을 나열한다
-## -n: 호스트 이름을 결정하지 않는다(DNS 없음)
-## -P: 포트 이름을 결정하지 않는다(이름 대신 포트 번호 나열)
+    > lsof -i -n -P | grep LISTEN
+    ## -i: IP소켓을 나열한다
+    ## -n: 호스트 이름을 결정하지 않는다(DNS 없음)
+    ## -P: 포트 이름을 결정하지 않는다(이름 대신 포트 번호 나열)
 
-Output:
-Python      19165   ckgun  4u   IPv6 0x2d2d2e910f44e82f      0t0  TCP *:4444 (LISTEN)
+    Output:
+    Python      19165   ckgun  4u   IPv6 0x2d2d2e910f44e82f      0t0  TCP *:4444 (LISTEN)
 
-> kill 19165
+    > kill 19165
 
-Output:
-[1]    19165 terminated  python -m http.server 444
-```
+    Output:
+    [1]    19165 terminated  python -m http.server 444
+    ```
 <br />
 
 1. 프로세스 리소스를 제한하는 것은 편리한 도구가 될 수 있습니다. `stress -c 3`을 실행해보고 `htop`으로 CPU사용량을 시각화해보세요. 그리고 `teskset --cpu-list 0,2 stress -c 3`을 실행한 뒤 이를 다시 시각화 해보세요. `stress`가 3개의 CPU에 걸쳐있나요? 그렇지 않다면 그 이유는 무엇일까요? [`man taskset`](https://www.man7.org/linux/man-pages/man1/taskset.1.html)을 읽어봅시다. 도전: [`cgroups`](https://www.man7.org/linux/man-pages/man7/cgroups.7.html)를 사용하여 동일한 문제를 풀어보세요. `stress -m`의 메모리 소비를 제한해보세요.

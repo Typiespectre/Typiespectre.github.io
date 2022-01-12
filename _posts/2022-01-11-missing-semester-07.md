@@ -63,11 +63,146 @@ tags: [programming,]
         && echo "Playlist $f contains a HQ file in mp3 format"
     done
     ```
-<br /><br />
+<br />
 
 1.(심화) [reversible debugging](https://undo.io/resources/reverse-debugging-whitepaper/)에 대해 읽어보고 [rr](https://rr-project.org/) 혹은 [RevPDB](https://morepypy.blogspot.com/2016/07/reverse-debugging-for-python.html)를 사용하여 간단한 작업을 해보세요.
 - TDD(Time Travel Debugger)는 기존의 디버거와 다르게 코드의 진행과 반대로도 디버깅을 할 수 있는 기능을 가지고 있다(마음대로 함수 밖으로 빠져나오거나 들어갈 수도 있다!) 하지만 파이썬을 사용하는 입장에서, RevPDB는 2017년 이후 업데이트가 되지 않고 있고, 여전히 알파 단계이며 파이썬 2.7만을 지원한다고 한다. 이외에도 파이썬에는 마땅한 TDD가 없는 것 같다. 기존 pdb에서 jump를 이용하면 코드를 마음대로 이동할 수 있는 것 같기도 하다.
 
 ### 프로파일링
-1.[이곳](https://missing-semester-kr.github.io/static/files/sorts.py)에 다양한 정렬 알고리즘이 구현되어 있습니다. [cProfile](https://docs.python.org/3/library/profile.html)과 [line_profiler](https://github.com/rkern/line_profiler)를 사용하여 삽입 정렬과 퀵 정렬의 수행 시간을 비교해보세요. 각 알고지름에서 병목 현상이 일어나는 곳은 어디인가요? `memory_profiler`를 사용하여 메모리 사용량을 비교해보고 왜 삽입 정렬이 나은지를 알아보세요. 내장된 버전의 퀵 소트를 체크해보세요. 도전: `perf`를 사용하여 각 알고리즘의 주기 횟수 및 캐시 히트/미스를 확인해보세요.
+1.[이곳](https://missing-semester-kr.github.io/static/files/sorts.py)에 다양한 정렬 알고리즘이 구현되어 있습니다. [cProfile](https://docs.python.org/3/library/profile.html)과 [line_profiler](https://github.com/rkern/line_profiler)를 사용하여 삽입 정렬과 퀵 정렬의 수행 시간을 비교해보세요. 각 알고리즘에서 병목 현상이 일어나는 곳은 어디인가요? `memory_profiler`를 사용하여 메모리 사용량을 비교해보고 왜 삽입 정렬이 나은지를 알아보세요. 내장된 버전의 퀵 소트를 체크해보세요. 도전: `perf`를 사용하여 각 알고리즘의 주기 횟수 및 캐시 히트/미스를 확인해보세요.
+    ```sh
+    > python -m cProfile -s cumulative sorts.py
 
+    Output:
+    Ordered by: cumulative time
+
+       ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        77576    0.013    0.000    0.075    0.000 random.py:334(randint)
+        77576    0.031    0.000    0.061    0.000 random.py:290(randrange)
+    33820/1000    0.022    0.000    0.034    0.000 sorts.py:23(quicksort)
+    34284/1000    0.023    0.000    0.025    0.000 sorts.py:32(quicksort_inplace)
+         1000    0.023    0.000    0.023    0.000 sorts.py:11(insertionsort)
+    ---[EOF]---
+    ```
+    ```sh
+    ## insertionsort 위에 @profile을 붙여야 한다.
+    ## insertionsort profiling
+    > kernprof -l -v sorts.py
+
+    Output:
+    Wrote profile results to sorts.py.lprof
+    Timer unit: 1e-06 s
+
+    Total time: 0.224724 s
+    File: sorts.py
+    Function: insertionsort at line 9
+
+    Line #      Hits         Time  Per Hit   % Time  Line Contents
+    ==============================================================
+         9                                           @profile
+        10                                           def insertionsort(array):
+        11
+        12     25770       6736.0      0.3      3.0      for i in range(len(array)):
+        13     24770       6723.0      0.3      3.0          j = i-1
+        14     24770       7402.0      0.3      3.3          v = array[i]
+        15    225488      73164.0      0.3     32.6          while j >= 0 and v < array[j]:
+        16    200718      65448.0      0.3     29.1              array[j+1] = array[j]
+        17    200718      56791.0      0.3     25.3              j -= 1
+        18     24770       8201.0      0.3      3.6          array[j+1] = v
+        19      1000        259.0      0.3      0.1      return array
+    ## 병목 현상은 while문에서 발생하는 것으로 보인다.
+
+    ## quicksort profiling
+    Output:
+    Wrote profile results to sorts.py.lprof
+    Timer unit: 1e-06 s
+
+    Total time: 0.094387 s
+    File: sorts.py
+    Function: quicksort at line 20
+
+    Line #      Hits         Time  Per Hit   % Time  Line Contents
+    ==============================================================
+        20                                           @profile
+        21                                           def quicksort(array):
+        22     33650      15128.0      0.4     16.0      if len(array) <= 1:
+        23     17325       6589.0      0.4      7.0          return array
+        24     16325       6872.0      0.4      7.3      pivot = array[0]
+        25     16325      25918.0      1.6     27.5      left = [i for i in array[1:] if i < pivot]
+        26     16325      25845.0      1.6     27.4      right = [i for i in array[1:] if i >= pivot]
+        27     16325      14035.0      0.9     14.9      return quicksort(left) + [pivot] + quicksort(right)
+    ## 병목 현상은 pivot을 기준으로 값을 나누는 과정에서 발생하는 것으로 보인다.
+    ## insertionsort보다 quicksort가 더 빠르다.
+    ---[EOF]---
+    ```
+    ```sh
+    ## 위와 동일하게 insertionsort 함수 위에 @profile 설정
+    ## insertionsort memory profiling
+    > python -m memory_profiler sorts.py
+
+    Output:
+    Filename: sorts.py
+
+    Line #    Mem usage    Increment  Occurrences   Line Contents
+    =============================================================
+         9  166.953 MiB  166.859 MiB        1000   @profile
+        10                                         def insertionsort(array):
+        11
+        12  166.953 MiB    0.000 MiB       25371       for i in range(len(array)):
+        13  166.953 MiB    0.000 MiB       24371           j = i-1
+        14  166.953 MiB    0.000 MiB       24371           v = array[i]
+        15  166.953 MiB    0.000 MiB      221666           while j >= 0 and v < array[j]:
+        16  166.953 MiB    0.047 MiB      197295               array[j+1] = array[j]
+        17  166.953 MiB    0.000 MiB      197295               j -= 1
+        18  166.953 MiB    0.047 MiB       24371           array[j+1] = v
+        19  166.953 MiB    0.000 MiB        1000       return array
+    
+    ## quicksort memory profiling
+    Output:
+    Filename: sorts.py
+
+    Line #    Mem usage    Increment  Occurrences   Line Contents
+    =============================================================
+        20  166.219 MiB  166.141 MiB       33590   @profile
+        21                                         def quicksort(array):
+        22  166.219 MiB    0.047 MiB       33590       if len(array) <= 1:
+        23  166.219 MiB    0.016 MiB       17295           return array
+        24  166.219 MiB    0.000 MiB       16295       pivot = array[0]
+        25  166.219 MiB    0.000 MiB      155153       left = [i for i in array[1:] if i < pivot]
+        26  166.219 MiB    0.000 MiB      155153       right = [i for i in array[1:] if i >= pivot]
+        27  166.219 MiB    0.016 MiB       16295       return quicksort(left) + [pivot] + quicksort(right)
+
+    ## insertionsort와 다르게 quicksort는 또 다른 array를 만들기에 효율이 떨어질 수 있다고 생각하였지만, 위 결과를 보면 오히려 insertionsort가 메모리를더 차지하는 것처럼 보인다. inplace하게 리스트 내부의 요소를 변경해도 메모리 증가가 발생하는 것 같다. 그렇다면 in-place quicksort는 어떨까?
+
+    ## in-place quicksort memory profiling
+    Filename: sorts.py
+
+    Line #    Mem usage    Increment  Occurrences   Line Contents
+    =============================================================
+        29  164.812 MiB  164.547 MiB       34828   @profile
+        30                                         def quicksort_inplace(array, low=0, high=None):
+        31  164.812 MiB    0.031 MiB       34828       if len(array) <= 1:
+        32  164.812 MiB    0.000 MiB          33           return array
+        33  164.812 MiB    0.047 MiB       34795       if high is None:
+        34  164.812 MiB    0.047 MiB         967           high = len(array)-1
+        35  164.812 MiB    0.000 MiB       34795       if low >= high:
+        36  164.812 MiB    0.000 MiB       17881           return array
+        37
+        38  164.812 MiB    0.000 MiB       16914       pivot = array[high]
+        39  164.812 MiB    0.000 MiB       16914       j = low-1
+        40  164.812 MiB    0.031 MiB      129812       for i in range(low, high):
+        41  164.812 MiB    0.000 MiB      112898           if array[i] <= pivot:
+        42  164.812 MiB    0.016 MiB       58727               j += 1
+        43  164.812 MiB    0.047 MiB       58727               array[i], array[j] = array[j], array[i]
+        44  164.812 MiB    0.000 MiB       16914       array[high], array[j+1] = array[j+1], array[high]
+        45  164.812 MiB    0.000 MiB       16914       quicksort_inplace(array, low, j)
+        46  164.812 MiB    0.047 MiB       16914       quicksort_inplace(array, j+2, high)
+        47  164.812 MiB    0.000 MiB       16914       return array
+
+    ## 여전히 quicksort보다 메모리를 많이 차지하는 것처럼 보인다. 내가 값을 잘못 해석하고 있는건가...?
+    ---[EOF]---
+    ```
+    - `perf`는 Linux 명령어이여서 테스트할 수 없었다.
+<br />
+
+1. 다음은 각 숫자에 대한 함수를 사용하여 피보나치 숫자를 계산하기 위한 파이썬 코드입니다.(다음 코드는 논란의 여지가 있습니다.)

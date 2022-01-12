@@ -66,7 +66,7 @@ tags: [programming,]
 <br />
 
 1. (심화) [reversible debugging](https://undo.io/resources/reverse-debugging-whitepaper/)에 대해 읽어보고 [rr](https://rr-project.org/) 혹은 [RevPDB](https://morepypy.blogspot.com/2016/07/reverse-debugging-for-python.html)를 사용하여 간단한 작업을 해보세요.
--TDD(Time Travel Debugger)는 기존의 디버거와 다르게 코드의 진행과 반대로도 디버깅을 할 수 있는 기능을 가지고 있다(마음대로 함수 밖으로 빠져나오거나 들어갈 수도 있다!) 하지만 파이썬을 사용하는 입장에서, RevPDB는 2017년 이후 업데이트가 되지 않고 있고, 여전히 알파 단계이며 파이썬 2.7만을 지원한다고 한다. 이외에도 파이썬에는 마땅한 TDD가 없는 것 같다. 기존 pdb에서 jump를 이용하면 코드를 마음대로 이동할 수 있는 것 같기도 하다.
+- TDD(Time Travel Debugger)는 기존의 디버거와 다르게 코드의 진행과 반대로도 디버깅을 할 수 있는 기능을 가지고 있다(마음대로 함수 밖으로 빠져나오거나 들어갈 수도 있다!) 하지만 파이썬을 사용하는 입장에서, RevPDB는 2017년 이후 업데이트가 되지 않고 있고, 여전히 알파 단계이며 파이썬 2.7만을 지원한다고 한다. 이외에도 파이썬에는 마땅한 TDD가 없는 것 같다. 기존 pdb에서 jump를 이용하면 코드를 마음대로 이동할 수 있는 것 같기도 하다.
 
 ### 프로파일링
 
@@ -205,8 +205,33 @@ tags: [programming,]
     ## 여전히 quicksort보다 메모리를 많이 차지하는 것처럼 보인다. 내가 값을 잘못 해석하고 있는건가...?
     ---[EOF]---
     ```
-<br />
     - `perf`는 Linux 명령어이여서 테스트할 수 없었다.
 <br />
 
 1. 다음은 각 숫자에 대한 함수를 사용하여 피보나치 숫자를 계산하기 위한 파이썬 코드입니다.(다음 코드는 논란의 여지가 있습니다.)
+```python
+#!/usr/bin/env python
+def fib0(): return 0
+
+def fib1(): return 1
+
+s = """def fib{}(): return fib{}() + fib{}()"""
+
+if __name__ == '__main__':
+
+    for n in range(2, 10):
+        exec(s.format(n, n-1, n-2))
+    # from functools import lru_cache
+    # for n in range(10):
+    #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
+    print(eval("fib9()"))
+```
+코드를 파일에 넣고 실행 가능하게 만드세요. [pycallgraph](https://pycallgraph.slowchop.com/en/master/)를 설치하고 `pycallgraph graphviz -- ./fib.py`라는 명령어와 함께 위 코드를 실행한 뒤 `pycallgraph.png`를 체크해보세요. `fib0`은 몇 번이나 호출되었을까요? 메모이제이션(memoization)하면 위 함수를 개선할 수 있습니다. 주석처리된 부분의 주석을 제거하고 이미지를 다시 생성해보세요. 이번에는 `fibN` 함수가 몇 번이나 호출되었나요?
+
+![pycallgraph.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="100%" height="100%"}
+- `fib0`은 총 21번 호출되었다.
+
+![pycallgraph2.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="100%" height="100%"}
+- 모든 함수는 총 한 번 실행되고, 중복되는 함수는 캐시처리 된다!
+
+1. 수신하려는 포트가 이미 다른 프로세스에 사용되고 있는 것은 일반적인 문제입니다. 이를 위해 프로세스의 pid를 알아내는 방법을 배워봅시다. `4444`포트에서 수신 대기하는 최소한의 웹 서버를 만들기 위해서 `python -m http.server 4444`명령을 실행합니다. 다른 터미널에서 `lsof | grep LISTEN`을 사용하여 모든 수신 프로세스와 포트를 출력합니다. 해당 프로세스의 pid를 찾고 `kill <PID>` 명령을 실행하여 프로세스를 종료합니다.

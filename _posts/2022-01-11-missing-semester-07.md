@@ -135,10 +135,8 @@ tags: [programming,]
         27     16325      14035.0      0.9     14.9      return quicksort(left) + [pivot] + quicksort(right)
     ## 병목 현상은 pivot을 기준으로 값을 나누는 과정에서 발생하는 것으로 보인다.
     ## insertionsort보다 quicksort가 더 빠르다.
-    ---[EOF]---
-    ```
-<br />
-    ```sh
+    
+    ## for memory profiling ##
     ## 위와 동일하게 insertionsort 함수 위에 @profile 설정
     ## insertionsort memory profiling
     > python -m memory_profiler sorts.py
@@ -208,23 +206,24 @@ tags: [programming,]
 - `perf`는 Linux 명령어이여서 테스트할 수 없었다.
 
 1. 다음은 각 숫자에 대한 함수를 사용하여 피보나치 숫자를 계산하기 위한 파이썬 코드입니다.(다음 코드는 논란의 여지가 있습니다.) 코드를 파일에 넣고 실행 가능하게 만드세요. [pycallgraph](https://pycallgraph.slowchop.com/en/master/)를 설치하고 `pycallgraph graphviz -- ./fib.py`라는 명령어와 함께 위 코드를 실행한 뒤 `pycallgraph.png`를 체크해보세요. `fib0`은 몇 번이나 호출되었을까요? 메모이제이션(memoization)하면 위 함수를 개선할 수 있습니다. 주석처리된 부분의 주석을 제거하고 이미지를 다시 생성해보세요. 이번에는 `fibN` 함수가 몇 번이나 호출되었나요?
-    ```sh
-    #!/usr/bin/env python
-    def fib0(): return 0
+```sh
+#!/usr/bin/env python
+def fib0(): return 0
 
-    def fib1(): return 1
+def fib1(): return 1
 
-    s = """def fib{}(): return fib{}() + fib{}()"""
+s = """def fib{}(): return fib{}() + fib{}()"""
 
-    if __name__ == '__main__':
+if __name__ == '__main__':
 
-        for n in range(2, 10):
-            exec(s.format(n, n-1, n-2))
-        # from functools import lru_cache
-        # for n in range(10):
-        #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
-        print(eval("fib9()"))
-    ```
+    for n in range(2, 10):
+        exec(s.format(n, n-1, n-2))
+    # from functools import lru_cache
+    # for n in range(10):
+    #     exec("fib{} = lru_cache(1)(fib{})".format(n, n))
+    print(eval("fib9()"))
+```
+<br />
 
 ![pycallgraph.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
 - `fib0`은 총 21번 호출되었다.

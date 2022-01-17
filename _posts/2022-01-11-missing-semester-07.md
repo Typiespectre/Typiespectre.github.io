@@ -228,7 +228,7 @@ tags: [programming,]
 ![pycallgraph.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
 - `fib0`은 총 21번 호출되었다.
 
-![pycallgraph2.png](https://typiespectre.github.io/images/prog/pycallgraph.png){: width="50%" height="50%"}
+![pycallgraph2.png](https://typiespectre.github.io/images/prog/pycallgraph2.png){: width="50%" height="50%"}
 - 모든 함수는 총 한 번 실행되고, 중복되는 함수는 캐시처리 된다!
 
 <br />

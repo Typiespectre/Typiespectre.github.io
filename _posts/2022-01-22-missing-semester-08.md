@@ -7,7 +7,7 @@ categories: [programming,]
 tags: [programming,]
 ---
 1. 대부분의 메이크파일(Makefile)은 `clean`이라고 하는 타겟을 제공합니다. 이건 `clean`이라는 파일을 생성하기 위한 것이 아니라 make에 의해서 다시 빌드될 수 있는 모든 파일들을 싹 지우기 위한 것입니다. 모든 빌드 스텝들을 "되돌리리(undo)"할 수 있는 방법이라고 생각하시면 되요. 위에 있는 `paper.pdf` 메이크파일을 위한 `clean` 타겟을 구현해보세요. [포니](https://pinocc.tistory.com/131) 타겟(phony target)을 구현해야할 겁니다. 아마 [git ls-files 명령어](https://m.blog.naver.com/PostView.nhn?blogId=cyberpass&logNo=221037298316&proxyReferer=https:%2F%2Fwww.google.com%2F)가 유용할 겁니다. 아주 흔한 `make` 타겟들은 [여기](https://www.gnu.org/software/make/manual/html_node/Standard-Targets.html#Standard-Targets)에 나열되어 있습니다.
-    ```
+    ```sh
     .PHONY: clean
 
     clean:
@@ -62,7 +62,8 @@ tags: [programming,]
         echo "Cannot make paper.pdf"
         exit 1
     fi
-
+    ```
+    ```
     Output:
     $ git commit -m 'failure test'
     make: *** No rule to make target `paper.pdf'.  Stop.
@@ -71,3 +72,25 @@ tags: [programming,]
 <br />
 
 1. [Github Pages](https://docs.github.com/en/actions)를 사용해서 자동으로 개제되는 단순한 페이지를 하나 만들어보세요. 레포지토리에 [Github Action](https://github.com/features/actions)을 추가해서 레포지토리에 있는 모든 셸(shell) 파일들에 대해 `shellcheck`을 실행해보세요. (여기에 [그 방법 중 하나](https://github.com/marketplace/actions/shellcheck)가 있습니다.) 잘 작동하는지 한 번 확인해보세요!
+- 원격저장소 missing-semester-kr에서 시행했다. 레포지토리 상단의 'Actions' 탭을 클릭하여, 새로운 워크플로우를 만들어 `main.yml` 파일을 형성한다. `main.yml` 파일 안에 `shellcheck` 깃허브 액션 코드를 넣는다.
+    ```
+    name: ShellCheck
+
+    on:
+      push:
+        branches: [ master ]
+
+    jobs:
+      build:
+        runs-on: ubuntu-latest
+
+        steps:
+        - uses: actions/checkout@v2
+
+        - name: ShellCheck
+          uses: ludeeus/action-shellcheck@0.1.0
+    ```
+- 잘못된 sh파일을 원격저장소에 push하면, 레포지토리의 커밋 메세지 왼쪽에 초록색 체크 마크가 표시될 경우, `shellcheck` 깃허브 액션이 잘 적용된 것이다. 체크 마크를 클릭하여 완편의 `build` 섹션을 보면, 단계별 섹션 안에 `shellcheck` 섹션이 들어있는데, 이 안에 `shellcheck`가 잘못된 sh파일에 대해 프린트하는 구문이 들어있다.
+<br />
+
+1. [자신만의 깃허브 액션(Github Action)을 빌드](https://docs.github.com/en/actions/creating-actions)해서 레포지토리에 있는 모든 .md 파일들에 대해 [proselint](http://proselint.com/) 또는 [write-good](https://github.com/btford/write-good)을 실행해보세요. 그걸 여러분의 레포지토리에 활성화시키고, 안에 오타가 포함된 풀 리퀘스트(pull request; PR)를 보내서 잘 작동하는지 확인해보세요.

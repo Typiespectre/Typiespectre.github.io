@@ -42,13 +42,8 @@ tags: [programming,]
     1.*   := >=1.0.0, <2.0.0
     1.2.* := >=1.2.0, <1.3.0
     ```
-- Comparison requirements: 버전의 허용범위를 결정한다.
+- Comparison requirements: 버전의 허용범위를 결정한다. (< : 명시된 버전보다 낮은버전, <= : 명시된 버전과 같거나 낮은버전, > : 명시된 버전보다 높은버전, >= : 명시된 버전보다 같거나 높은버전)
     ```
-    # < 명시된 버전보다 낮은버전
-    # <= 명시된 버전과 같거나 낮은버전
-    # > 명시된 버전보다 높은버전
-    # >= 명시된 버전보다 같거나 높은버전
-
     >=1.2.7 <1.3.0                   # patch 업데이트만 허용한다
     1.2.7 || >=1.2.9 <2.0.0          # 1.2.7이거나 1.2.9 포함 minor와 patch 업데이트 허용
     >= 2.7                           # 2.7 이상의 높은 버전 허용
@@ -57,3 +52,22 @@ tags: [programming,]
 <br />
 
 1. 깃(Git)은 그 자체로 단순한 CI 시스템으로서 기능할 수 있습니다. 어떤 깃 레포지토리(git repository)에 있든 `git/hooks` 안에서, 특정 행위가 일어날 때 스크립트(script)로서 실행되는 (현재 비활성인) 파일들을 발견할 수 있을 것입니다. `make paper.pdf`를 실행시키고 `make` 명령어가 실패하면 커밋을 거부하는 [pre-commit hook](https://git-scm.com/book/ko/v2/Git%EB%A7%9E%EC%B6%A4-Git-Hooks)을 작성해보세요. 이러한 빌드가 안되는 버전의 paper를 어떤 커밋도 가지고 있지 않도록 방지해줄 것입니다.
+    ```sh
+    git hooks를 작동시키기 위해선, .git/hooks에 들어있는 pre-commit.sample을 복사하여 sample 확장자를 지워주면 된다. chmod +x로 pre-commit을 작동 가능하게 만들어야 하는 것도 잊지 말아야 한다.
+
+    pre-commit:
+    # !/bin/sh
+    
+    if ! make paper.pdf ; then
+        echo "Cannot make paper.pdf"
+        exit 1
+    fi
+
+    Output:
+    $ git commit -m 'failure test'
+    make: *** No rule to make target `paper.pdf'.  Stop.
+    Cannot make paper.pdf
+    ```
+<br />
+
+1. [Github Pages](https://docs.github.com/en/actions)를 사용해서 자동으로 개제되는 단순한 페이지를 하나 만들어보세요. 레포지토리에 [Github Action](https://github.com/features/actions)을 추가해서 레포지토리에 있는 모든 셸(shell) 파일들에 대해 `shellcheck`을 실행해보세요. (여기에 [그 방법 중 하나](https://github.com/marketplace/actions/shellcheck)가 있습니다.) 잘 작동하는지 한 번 확인해보세요!

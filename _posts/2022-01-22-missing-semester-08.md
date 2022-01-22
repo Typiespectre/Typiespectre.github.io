@@ -37,8 +37,7 @@ tags: [programming,]
     ~1      := >=1.0.0, <2.0.0      # minor version이 지정되어 있지 않으니 minor-level 변경을 허용
     ```
 - Wildcard requirements: 와일드카드(`*`)가 지정된 요소의 변경을 허용한다.
-    ```sh
-    *     := >=0.0.0                # 하지만 권장되지 않는 방식
+    ```
     1.*   := >=1.0.0, <2.0.0
     1.2.* := >=1.2.0, <1.3.0
     ```
@@ -90,8 +89,7 @@ tags: [programming,]
         - name: ShellCheck
           uses: ludeeus/action-shellcheck@0.1.0
     ```
-
-- 잘못된 sh파일을 원격저장소에 push하면, 레포지토리의 커밋 메세지 왼쪽에 초록색 체크 마크가 표시될 경우, `shellcheck` 깃허브 액션이 잘 적용된 것이다. 체크 마크를 클릭하여 완편의 `build` 섹션을 보면, 단계별 섹션 안에 `shellcheck` 섹션이 들어있는데, 이 안에 `shellcheck`가 잘못된 sh파일에 대해 프린트하는 구문이 들어있다.
+    - 잘못된 sh파일을 원격저장소에 push하면, 레포지토리의 커밋 메세지 왼쪽에 초록색 체크 마크가 표시될 경우, `shellcheck` 깃허브 액션이 잘 적용된 것이다. 체크 마크를 클릭하여 완편의 `build` 섹션을 보면, 단계별 섹션 안에 `shellcheck` 섹션이 들어있는데, 이 안에 `shellcheck`가 잘못된 sh파일에 대해 프린트하는 구문이 들어있다.
 <br />
 
 1. [자신만의 깃허브 액션(Github Action)을 빌드](https://docs.github.com/en/actions/creating-actions)해서 레포지토리에 있는 모든 .md 파일들에 대해 [proselint](http://proselint.com/) 또는 [write-good](https://github.com/btford/write-good)을 실행해보세요. 그걸 여러분의 레포지토리에 활성화시키고, 안에 오타가 포함된 풀 리퀘스트(pull request; PR)를 보내서 잘 작동하는지 확인해보세요.

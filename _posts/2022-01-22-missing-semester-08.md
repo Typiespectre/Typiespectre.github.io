@@ -86,6 +86,7 @@ tags: [programming,]
         - name: ShellCheck
           uses: ludeeus/action-shellcheck@0.1.0
     ```
+
 - 잘못된 sh파일을 원격저장소에 push하면, 레포지토리의 커밋 메세지 왼쪽에 초록색 체크 마크가 표시될 경우, `shellcheck` 깃허브 액션이 잘 적용된 것이다. 체크 마크를 클릭하여 완편의 `build` 섹션을 보면, 단계별 섹션 안에 `shellcheck` 섹션이 들어있는데, 이 안에 `shellcheck`가 잘못된 sh파일에 대해 프린트하는 구문이 들어있다.
 <br />
 

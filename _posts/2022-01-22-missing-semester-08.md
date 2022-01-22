@@ -74,22 +74,19 @@ tags: [programming,]
 - 원격저장소 missing-semester-kr에서 시행했다. 레포지토리 상단의 'Actions' 탭을 클릭하여, 새로운 워크플로우를 만들어 `main.yml` 파일을 형성한다. `main.yml` 파일 안에 `shellcheck` 깃허브 액션 코드를 넣는다.
     ```
     name: ShellCheck
-
     on:
       push:
         branches: [ master ]
-
     jobs:
       build:
         runs-on: ubuntu-latest
-
         steps:
         - uses: actions/checkout@v2
 
         - name: ShellCheck
           uses: ludeeus/action-shellcheck@0.1.0
     ```
-    - 잘못된 sh파일을 원격저장소에 push하면, 레포지토리의 커밋 메세지 왼쪽에 초록색 체크 마크가 표시될 경우, `shellcheck` 깃허브 액션이 잘 적용된 것이다. 체크 마크를 클릭하여 완편의 `build` 섹션을 보면, 단계별 섹션 안에 `shellcheck` 섹션이 들어있는데, 이 안에 `shellcheck`가 잘못된 sh파일에 대해 프린트하는 구문이 들어있다.
+- 잘못된 sh파일을 원격저장소에 push하면, 레포지토리의 커밋 메세지 왼쪽에 초록색 체크 마크가 표시될 경우, `shellcheck` 깃허브 액션이 잘 적용된 것이다. 체크 마크를 클릭하여 완편의 `build` 섹션을 보면, 단계별 섹션 안에 `shellcheck` 섹션이 들어있는데, 이 안에 `shellcheck`가 잘못된 sh파일에 대해 프린트하는 구문이 들어있다.
 <br />
 
 1. [자신만의 깃허브 액션(Github Action)을 빌드](https://docs.github.com/en/actions/creating-actions)해서 레포지토리에 있는 모든 .md 파일들에 대해 [proselint](http://proselint.com/) 또는 [write-good](https://github.com/btford/write-good)을 실행해보세요. 그걸 여러분의 레포지토리에 활성화시키고, 안에 오타가 포함된 풀 리퀘스트(pull request; PR)를 보내서 잘 작동하는지 확인해보세요.

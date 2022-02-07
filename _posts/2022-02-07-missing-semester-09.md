@@ -16,5 +16,6 @@ tags: [programming,]
 4. 공격자가 초당 10,000개의 암호를 추측할 수 있다고 가정합니다. 각 암호들을 해독하는데 평균적으로 얼마나 걸릴까요?
     - 년단위로 계산할 경우, 공격자가 1년 동안 추측할 수 있는 암호의 개수는 `365*24*60*60*10000 = 315360000000`이다. 이를 각 패스워드에 대입하면, 첫 번째의 경우, `(2**83)//315360000000 =  30667829011025`년이 걸리고, 두 번째의 경우, `(2**48)////315360000000 = 892`년이 걸린다.
 <br />
+
 ## 2. Hash 함수
 1. [mirror](https://www.debian.org/CD/http-ftp/)에서 Debian 이미지를 다운로드합니다. [Argentinean mirror](http://debian.xfree.com.ar/debian-cd/current/amd64/iso-cd/)에서 다운로드 한 경우, `debian.org`로 호스팅되는 공식 Debian 사이트에서 [해쉬 값](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS)을 가져와 교차 확인(예: `sha256sum` 명령어)을 합니다.

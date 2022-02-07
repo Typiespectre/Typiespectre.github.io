@@ -19,3 +19,34 @@ tags: [programming,]
 
 ## 2. Hash 함수
 1. [mirror](https://www.debian.org/CD/http-ftp/)에서 Debian 이미지를 다운로드합니다. [Argentinean mirror](http://debian.xfree.com.ar/debian-cd/current/amd64/iso-cd/)에서 다운로드 한 경우, `debian.org`로 호스팅되는 공식 Debian 사이트에서 [해쉬 값](https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS)을 가져와 교차 확인(예: `sha256sum` 명령어)을 합니다.
+    ```sh
+    """ 미러 사이트에서 이미지를 다운로드하고, 공식 사이트에서 해쉬 값을 다운로드한다.
+    curl -O -L -C - http://debian.xfree.com.ar/debian-cd/current/amd64/iso-cd/debian-mac-11.2.0-amd64-netinst.iso
+    curl -O -L https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS
+    ```
+<br />
+
+## 3. 대칭키 암호
+1. [OpenSSL](https://www.openssl.org/): `openssl aes-256-cbc -salt -in {input filename} -out {output filename}`을 사용하여 AES암호화로 파일 암호화를 합니다. `cat` 또는 `hexdump`를 사용해 내용을 보십시오. `openssl aes-256-cbc -d -in {input filename) -out {output filename}`을 사용하여 파일을 해독하고 `cmp`를 사용하여 해당 파일이 원본 파일과 동일한지 비교하세요.
+    ```sh
+    """ test파일 암호화
+    openssl aes-256-cbc --salt -in test -out test.enc
+    
+    """ 패스워드를 입력해야 한다.
+
+    """Output:
+    cat test.enc
+    > salted__{정체를 알 수 없는 문자들}
+
+    """ test.enc 해독
+    openssl aes-256-cbc -d -in test.enc -out test.dec
+
+    """ 위에서 설정한 패스워드를 입력하면 해독된다.
+
+    cmp test test.dec
+    """ 두 내용이 동일하기에 에러메세지가 뜨지 않음.
+    ```
+<br />
+
+## 4. 비대칭키 암호
+1. [SSH Keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-2)를 접근해야 하는 컴퓨터에 설정합니다(Kerberos가 SSH keys와 이상하게 동작하기 때문에, Athena가 아닌 것으로 합니다). 연결된 튜토리얼처럼 RSA키를 사용하는 것이 아닌 더 안전한 [ED25519키](https://wiki.archlinux.org/title/SSH_keys#Ed25519)를 사용합니다. 개인 키가 비밀번호로 암호화 되었는지 확인하여 저장시 보호되도록 합니다.

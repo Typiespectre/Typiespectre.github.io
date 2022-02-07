@@ -23,6 +23,9 @@ tags: [programming,]
     """ 미러 사이트에서 이미지를 다운로드하고, 공식 사이트에서 해쉬 값을 다운로드한다.
     curl -O -L -C - http://debian.xfree.com.ar/debian-cd/current/amd64/iso-cd/debian-mac-11.2.0-amd64-netinst.iso
     curl -O -L https://cdimage.debian.org/debian-cd/current/amd64/iso-cd/SHA256SUMS
+
+    """ 음... 그런데 애써 다운로드를 해도 파일에 무언가 문제가 있어서 그런지 제대로 다운로드 되지 않는다.
+    """ 참고한 블로그의 주소를 대신 올려놓는다. https://ivan-kim.github.io/MIT-missing-semester/Lecture9/
     ```
 <br />
 
@@ -34,7 +37,7 @@ tags: [programming,]
     
     """ 패스워드를 입력해야 한다.
 
-    """Output:
+    """ Output:
     cat test.enc
     > salted__{정체를 알 수 없는 문자들}
 
@@ -50,3 +53,49 @@ tags: [programming,]
 
 ## 4. 비대칭키 암호
 1. [SSH Keys](https://www.digitalocean.com/community/tutorials/how-to-set-up-ssh-keys-2)를 접근해야 하는 컴퓨터에 설정합니다(Kerberos가 SSH keys와 이상하게 동작하기 때문에, Athena가 아닌 것으로 합니다). 연결된 튜토리얼처럼 RSA키를 사용하는 것이 아닌 더 안전한 [ED25519키](https://wiki.archlinux.org/title/SSH_keys#Ed25519)를 사용합니다. 개인 키가 비밀번호로 암호화 되었는지 확인하여 저장시 보호되도록 합니다.
+    ```sh
+    """ 이미 SSH Keys를 설정해서, 예시 Output을 복붙하겠다.
+    ssh-keygen -t ed25519
+
+    """ Output:
+    Generating public/private ed25519 key pair.
+    Enter file in which to save the key (/home/sammy/.ssh/id_ed25519):
+    Enter passphrase (empty for no passphrase):
+    Enter same passphrase again:
+    Your identification has been saved in /home/sammy/.ssh/id_ed25519
+    Your public key has been saved in /home/sammy/.ssh/id_ed25519.pub
+    The key fingerprint is:
+    SHA256:EGx5HEXz7EqKigIxHHWKpCZItSj1Dy9Dqc5cYae+1zc sammy@hostname
+    The key's randomart image is:
+    +--[ED25519 256]--+
+    | o+o o.o.++      |
+    |=oo.+.+.o  +     |
+    |*+.oB.o.    o    |
+    |*. + B .   .     |
+    | o. = o S . .    |
+    |.+ o o . o .     |
+    |. + . ... .      |
+    |.  . o. . E      |
+    | .. o.   . .     |
+    +----[SHA256]-----+
+    ```
+2. [GPG 설정](https://www.digitalocean.com/community/tutorials/how-to-use-gpg-to-encrypt-and-sign-messages)
+    ```sh
+    brew install gpg
+    gpg --gen-key
+    """ 이름, 메일, passphrase 설정 등이 실행된다.
+    gpg --output ~/revocation.crt --gen-revoke {my@email.address}
+    chmod 600 ~/revocation.crt
+    ```
+3. Anish에게 암호화된 전자메일([공개키](https://keybase.io/anish))을 보냅니다.
+    ```sh
+    """ 먼저 친구에게 줄 공개키 파일을 만들어야 한다.
+    gpg --armor --export {my@email.address} > pubkey.asc
+    """ 그리고 해당 파일을 친구에게 전송한다.
+    """ 친구의 공개키를 가져온다.
+    gpg --import friendpubkey.asc
+    """ 그리고 친구의 이메일로 메세지를 보낸다.
+    gpg --encrypt --armor --recipient {friend@email.address} {message-file}
+    ```
+4. `git commit -S`로 Git commit에 서명하거나, `git tag -s`로 서명된 Git tag를 사용합니다. `git show --show-signature`를 사용하여 서명이나 `git tag -v`를 사용하여 태그를 검증합니다.
+    - Github에 GPG키를 [등록](https://docs.github.com/en/authentication/managing-commit-signature-verification/about-commit-signature-verification#gpg-commit-signature-verification)해야 서명을 할 수 있는 것 같다. 이외에도 위의 블로그를 읽어보니 [문제](https://stackoverflow.com/questions/41052538/git-error-gpg-failed-to-sign-data/41054093#41054093)가 있는 것 같아서 생략...

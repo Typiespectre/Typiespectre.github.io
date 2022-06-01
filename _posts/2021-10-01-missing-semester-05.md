@@ -89,7 +89,7 @@ tags: [programming,]
     files="tmux, vimrc, zshrc, vim, zsh, gitconfig, git"
 
     for file in $files; do
-        ln -s ~/dotfiles/$file ~/.file
+        ln -s ~/.$file ~/dotfiles/.$file
     done
     ```
 <br />
